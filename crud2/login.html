@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <p>Login <input type="text" id="login"></p>
+
+    <p>Senha <input type="password" id="senha"></p>
+
+    <p><button onclick ="login()">Login</button></p>
+
+    <a href="cadastrar.html">
+        <p>Não tem conta? Cadastre-se</p>
+    </a>
+    
+    <p id="incorreta"></p>
+ 
+    <script>
+    function login(){
+       formData = new FormData()
+       let login = document.getElementById('login')
+       let senha = document.getElementById('senha')
+       let incorreta = document.getElementById('incorreta')
+
+       formData.append("login",login.value)
+       formData.append("senha",senha.value)
+
+        ajax = new XMLHttpRequest()
+
+        ajax.open('POST', 'login.php')
+
+        ajax.onreadystatechange = () =>{
+
+            if(ajax.readyState == 4 && ajax.status == 200){
+
+                if(ajax.responseText == 1){
+
+                    window.location.href = "homepage.html"
+
+                }else{
+
+                    incorreta.innerHTML = `Usuário ou Senha inválidos`
+
+                }          
+            }
+        }
+        ajax.send(formData)
+    }
+    </script>
+</body>
+</html>
