@@ -7,12 +7,13 @@ class Connect{
     public $conexao;
     
 
+
 public function connexion(){
 
     $this->dsn = 'mysql:host=localhost;dbname=crud2';
     $this->username = 'root';
     $this->password = '123456';
-
+   
     try {
 
     $this->conexao = new PDO($this->dsn, $this->username, $this->password);

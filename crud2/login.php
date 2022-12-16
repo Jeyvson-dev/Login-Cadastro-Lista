@@ -7,13 +7,34 @@ private $validation;
 private $user;
 private $senha;
 
+
+public function __construct($user, $senha){
+    
+    $this->user = $user;
+    $this->senha = $senha;
+
+}
+
+public function validateLogin($userL, $userSQL, $senhaL, $senhaSQL){
+
+    if($userL == $userSQL && $senhaL == $senhaSQL){
+
+        $this->validation = true;
+
+    }else{
+
+        $this->validation = false;
+
+    }
+
+    echo $this->validation;
+
+
+}
+
 public function loginUser(){
 
     $this->connexion();
-
-    $this->user = $_POST['login'];
-
-    $this->senha = $_POST['senha'];
 
     $sql = "SELECT
                  * 
@@ -29,17 +50,9 @@ public function loginUser(){
 
     $login = $stmt->fetch(PDO::FETCH_OBJ);
 
-    if($this->user == $login->login && $this->senha == $login->senha){
+    $this->validateLogin($login->login, $this->user, $login->senha, $this->senha);
 
-        $this->validation = true;
-
-    }else{
-
-        $this->validation = false;
-
-    }
-
-    echo $this->validation;
+    
 }
 
 public function getValidation()
@@ -83,7 +96,7 @@ return $this;
 }
 }
 
-$teste = new Login();
+$teste = new Login($_POST['login'],$_POST['senha']);
 
 $teste->loginUser();
 

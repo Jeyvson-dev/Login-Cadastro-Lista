@@ -12,20 +12,21 @@ class Cadastrar extends Connect{
     private $login;
     private $senha;
 
-    public function cadastrar(){
 
-        $this->connexion();
+    public function __construct($nome, $nascimento, $sexo, $email, $login, $senha){
 
-        $this->nome = $_POST['nome'];
-        $this->nascimento = $_POST['nascimento'];
-        $this->idade = $this->formatIdade($this->nascimento);
-        $this->sexo = $_POST['sexo'];
-        $this->email = $_POST['email'];
-        $this->login = $_POST['login'];
-        $this->senha = $_POST['senha'];
-
+        $this->nome = $nome;
+        $this->nascimento = $nascimento;
+        $this->idade = $this->formatIdade($nascimento);
+        $this->sexo = $sexo;
+        $this->email = $email;
+        $this->login = $login;
+        $this->senha = $senha;
         
+    }
 
+    public function cadastrar(){
+        
         if(empty($this->nome)){
 
            die('Campo "Nome" é obrigatório');
@@ -60,6 +61,11 @@ class Cadastrar extends Connect{
             die('Campo senha precisa ser preenchido');
             
         }
+        if (strlen($this->login) > 10){
+
+            die('O campo "login" precisa ter no máximo 10 Caracteres');
+
+        }
         
         if(strlen($this->senha) < 8){
 
@@ -67,17 +73,24 @@ class Cadastrar extends Connect{
 
         }else{
         
+            $this->insert();
+
+        echo 'O usuário foi cadastrado com sucesso';
+
+        }
+
+
+    }
+    public function insert(){
+
+        $this->connexion();
+
         $sql = "
         INSERT INTO cadastros (nome, idade, sexo, email, login, senha, nascimento)
         value('$this->nome','$this->idade','$this->sexo','$this->email','$this->login','$this->senha','$this->nascimento')
         ";
         
         $this->conexao->query($sql);
-
-        echo 'O usuário foi cadastrado com sucesso';
-
-        }
-
 
     }
 
@@ -178,7 +191,6 @@ class Cadastrar extends Connect{
     }
 }
 
-$cadastrar = new Cadastrar();
-$cadastrar->cadastrar()
-
+$cadastrar = new Cadastrar($_POST['nome'],$_POST['nascimento'],$_POST['sexo'], $_POST['email'], $_POST['login'], $_POST['senha']);
+$cadastrar->cadastrar();
 ?>
