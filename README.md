@@ -1,1 +1,2 @@
-Tela de Login, cadastro e listagem de usuários cadastrados(por enquanto) Para treinar POO, PDO e AJAX
+Tela de Login, cadastro, listagem, delete e alteração de usuários (CRUD) utilizando meus conhecimentos de PDO, POO, AJAX,
+HTML, JS e PHP.
